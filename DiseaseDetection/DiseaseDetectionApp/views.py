@@ -18,7 +18,8 @@ import cv2
 def index(request):
     return render(request, 'DiseaseDetectionApp/base.html',{})
 
-def prediction(image_path):
+def prediction(p):
+    orig = cv2.imread(p)
 
 
 def malaria(request):
