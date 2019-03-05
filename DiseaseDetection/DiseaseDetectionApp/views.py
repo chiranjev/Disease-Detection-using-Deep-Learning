@@ -17,6 +17,8 @@ from .utils import *
 
 
 
+model = load_model('media/models/malaria.model')
+model._make_predict_function()
 def index(request):
     return render(request, 'DiseaseDetectionApp/base.html',{})
 
@@ -31,8 +33,8 @@ def prediction(p):
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     print(image)
+    print(model)
     print('------------')
-    model = load_model('media/models/malaria.model')
     # make predictions on the input image
     pred = model.predict(image)
     pred = pred.argmax(axis=1)[0]
