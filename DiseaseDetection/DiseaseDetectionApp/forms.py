@@ -9,6 +9,12 @@ class MalariaForm(forms.ModelForm):
         model = Malaria
         fields = ['malaria_img']
 
+class CancerForm(forms.ModelForm):
+
+    class Meta:
+        model = Cancer
+        fields = ['cancer_img']
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
+
+
 # from imutils import build_montages
 # from imutils import paths
 import numpy as np
@@ -23,6 +25,7 @@ from .utils import *
 
 model = load_model('media/models/malaria.model')
 model._make_predict_function()
+
 def index(request):
     return render(request, 'DiseaseDetectionApp/base.html',{})
 
@@ -73,6 +76,28 @@ def malaria(request):
     else:
         form = MalariaForm()
     return render(request, 'DiseaseDetectionApp/malaria.html', {'form' : form})
+
+def cancer(request):
+
+    if request.method == 'POST':
+        form = CancerForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            image_path = form.cleaned_data['cancer_img']
+            # print('kdslfjskldfjsdlkfjsdklfjsdflkj')
+            # print(image_path)
+            label = prediction('media/images/'+str(image_path))
+            if(label=='Parasitized'):
+                label = "has cancer"
+            else:
+                label = "does not have cancer"
+            return render(request, 'DiseaseDetectionApp/cancer.html', {'image_path': image_path,'label':label})
+
+            return redirect('/cancer',{'image_path': image_path})
+    else:
+        form = CancerForm()
+    return render(request, 'DiseaseDetectionApp/cancer.html', {'form' : form})
 
 
 def index(request):
