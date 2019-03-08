@@ -5,13 +5,17 @@
 
 <section class="" style="margin-top: 15em;">
     <div class="container">
+      <p>One of the most common cancer among the women in the world is the breast cancer. We were able to notice that it accounted for about 25% of all cancer cases and affected over 2.1 million people in 2015 alone. It usually starts when cells in the breasts begin to grow out of control. These cells tend to form tumors which can be seen via X-ray or even be felt as lumps in the breast areas.</p>
+      <p>The chances of survival can significantly increase if it is diagnosed at an early stage. One of the key difficulties against breast cancer’s detection is whether how would we characterize tumors into being benign (non-cancerous) or malignant (cancerous). A tumor can be viewed as benign if it does not invade adjacent tissue or spread to the alternate parts of the body in the manner in which cancerous tumors can. A threatening tumor's cells can develop into encompassing tissues or spread to remote areas of the body. Indeed, even benevolent tumors can go about as difficult issues on the off chance that they push on some imperative structures, for example, nerves or veins.</p>
+      <br>
+      <br>
+      <form method = "post" enctype="multipart/form-data">
         <div class="row">
-          <form method = "post" enctype="multipart/form-data">
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="btn btn-success">Upload</button>
-            </form
-            <div class="container">
+            </form>
+            <div class="container img-cont">
               {% if image_path %}
                 <img src="media/images/{{ image_path }}" alt="{{image_path}}" class="img-responsive" style="width: 10%; float: left; margin-right: 10px;" />
                 <p>person {{ label }}</p>
@@ -19,7 +23,6 @@
 
             </div>
         </div>
-    </div>
 </section>
 
 
