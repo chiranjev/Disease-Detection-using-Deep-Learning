@@ -70,6 +70,12 @@ def malaria(request):
             # print('kdslfjskldfjsdlkfjsdklfjsdflkj')
             # print(image_path)
             label = prediction('media/images/'+str(image_path))
+            malaria_obj = Malaria.objects.filter().order_by('-pk')[0]
+            malaria_obj.prediction = label
+            if request.user.is_authenticated:
+                user_obj = User.objects.get(username=request.user.username)
+                malaria_obj.user = user_obj
+            malaria_obj.save()
             return render(request, 'DiseaseDetectionApp/malaria.html', {'image_path': image_path,'label':label})
 
             return redirect('/malaria',{'image_path': image_path})
@@ -92,6 +98,14 @@ def cancer(request):
                 label = "has cancer"
             else:
                 label = "does not have cancer"
+
+            malaria_obj = Cancer.objects.filter().order_by('-pk')[0]
+            malaria_obj.prediction = label
+            if request.user.is_authenticated:
+                user_obj = User.objects.get(username=request.user.username)
+                malaria_obj.user = user_obj
+            malaria_obj.save()
+
             return render(request, 'DiseaseDetectionApp/cancer.html', {'image_path': image_path,'label':label})
 
             return redirect('/cancer',{'image_path': image_path})
@@ -114,6 +128,15 @@ def retina(request):
                 label = "has diabeties"
             else:
                 label = "does not have diabeties"
+
+            malaria_obj = DiabeticRetinopathy.objects.filter().order_by('-pk')[0]
+            malaria_obj.prediction = label
+            if request.user.is_authenticated:
+                user_obj = User.objects.get(username=request.user.username)
+                malaria_obj.user = user_obj
+            malaria_obj.save()
+
+
             return render(request, 'DiseaseDetectionApp/retina.html', {'image_path': image_path,'label':label})
 
             return redirect('/retina',{'image_path': image_path})

@@ -77,6 +77,7 @@
   		 			<div class="collapse navbar-collapse " id="demo-menu">
   		 				<ul class="nav navbar-nav">
   		 					<li><a class="smooth-scroll" href="{% url 'index' %}">Home</a></li>
+                <li><a class="smooth-scroll" href="/#about">About</a></li>
   							<li class="nav-item dropdown">
   								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Diseases</a>
   								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -89,18 +90,18 @@
   								</div>
   							</li>
                 <li><a class="smooth-scroll" href="/#feature">Features</a></li>
-                <li><a class="smooth-scroll" href="/#about">About</a></li>
                 <!-- <li><a class="smooth-scroll" href="#team">Our Team</a></li> -->
                 <li><a class="smooth-scroll" href="/#team">Contact Us</a></li>
 
   							<!-- <li><a class="navbar-link" href="{% url 'logout' %}">Logout</a></li> -->
   							{% if user.is_authenticated %}
+                <li><a class="smooth-scroll" href="/">Hi {{ user.username }}</a></li>
   							<li><a class="smooth-scroll" href="{% url 'logout' %}">Logout</a></li>
   							{% else %}
   							<li><a class="smooth-scroll" href="{% url 'user_login' %}">Login</a></li>
   							<!-- <li><a class="navbar-link" href="{% url 'user_login' %}">Login</a></li> -->
-  							{% endif %}
                 <li><a class="smooth-scroll" href="{% url 'register' %}">SignUp</a></li>
+  							{% endif %}
   		 				</ul>
   		 			</div>
   		 		</div>
