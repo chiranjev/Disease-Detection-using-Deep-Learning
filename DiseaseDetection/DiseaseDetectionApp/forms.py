@@ -15,6 +15,12 @@ class CancerForm(forms.ModelForm):
         model = Cancer
         fields = ['cancer_img']
 
+class DiabeticRetinopathyForm(forms.ModelForm):
+
+    class Meta:
+        model = DiabeticRetinopathy
+        fields = ['retina_img']
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

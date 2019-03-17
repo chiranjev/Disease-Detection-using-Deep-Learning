@@ -99,6 +99,28 @@ def cancer(request):
         form = CancerForm()
     return render(request, 'DiseaseDetectionApp/cancer.html', {'form' : form})
 
+def retina(request):
+
+    if request.method == 'POST':
+        form = DiabeticRetinopathyForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            image_path = form.cleaned_data['retina_img']
+            # print('kdslfjskldfjsdlkfjsdklfjsdflkj')
+            # print(image_path)
+            label = prediction('media/images/'+str(image_path))
+            if(label=='Parasitized'):
+                label = "has diabeties"
+            else:
+                label = "does not have diabeties"
+            return render(request, 'DiseaseDetectionApp/retina.html', {'image_path': image_path,'label':label})
+
+            return redirect('/retina',{'image_path': image_path})
+    else:
+        form = DiabeticRetinopathyForm()
+    return render(request, 'DiseaseDetectionApp/retina.html', {'form' : form})
+
 
 def index(request):
     return render(request, 'DiseaseDetectionApp/index.html')
