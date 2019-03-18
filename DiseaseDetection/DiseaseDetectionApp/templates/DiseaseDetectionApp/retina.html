@@ -3,7 +3,7 @@
 {% load static %}
 
 
-<section class="" style="margin-top: 15em;">
+<!-- <section class="" style="margin-top: 15em;">
     <div class="container">
         <div class="row">
           <p>Diabeties is a contagious disease that is known of causing more than 400,000 deaths per year. </p>
@@ -25,8 +25,185 @@
             </div>
         </div>
     </div>
+</section> -->
+
+<!-- home -->
+<section id="home"  style="background-image:url('../../static/DiseaseDetectionApp/img/images/maleria1.png');background-repeat: no-repeat;background-size: cover !important; height: 700px !important;">
+    <div id="home-cover-m" class="bg-parallax animated fadeIn">
+      <div id="home-content-box">
+        <div id="home-content-box-inner-m" style="padding-top: 20%; padding-left: 5%;">
+          <div id="home-heading" class="animated bounceInLeft">
+             <h3>Diabetic Retinopathy</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section id="feature">
+  <div class="container" id="feature-box">
+    <div class="row">
+      <h5 id="feature-h5" class="text-center" style="font-size: 30px; padding: 0 0 20px 0;">Research & Surveys Analysis</h5>
+      <div class="col-xs-12 text-center">
+        <div class="col-xs-3">
+          <img id="feature-img" src="/static/DiseaseDetectionApp/img/images/marketing.png">
+        </div>
+        <div class="col-xs-9" style="text-align:left;padding-top: 25px;">
+          <p id="feature-p">Detection of the diseases is very vital to be done at the right time, else it might be proved extremely fatal to the user. Due to previously conducted surveys, we have found out that there are several cases where the incident of unintentional medical errors are between 10% and 17%. There is also a probability where the problems in the reports are not directly identifiable by the doctors and can be only detected using advances computational search. Some important details like the medical history will be overlooked by the doctors when they are diagnosing.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- Upload -->
+<section>
+      <div class="row" style="background-Color: #41464b; text-color: white !important;  padding-top: 30px;  border-top: 5px solid rgba(0, 0, 0, 0.1); padding-bottom: 30px;">
+        <div class="container">
+          <p class="text-wht">Diabeties is a contagious disease that is known of causing more than 400,000 deaths per year. </p>
+          <br>
+          <p class="text-wht">It is truly prevalent in some areas of the world, which implies that the disease is consistently found in those regions. In the other regions of the world, malaria is epidemic. Yet in other areas of the world malaria is seldom, if ever, found at all. There are numerous factors that make a region prone to an infectious disease outbreak.</p>
+        <form method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Upload</button>
+          </form>
+          <br>
+          <br>
+          <div class="container img-cont">
+            {% if image_path %}
+              <img src="media/images/{{ image_path }}" alt="{{image_path}}" class="img-responsive" style="width: 10%; float: left; margin-right: 10px;" />
+              <p>person is {{ label }}</p>
+            {% endif %}
+            <br>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- about -->
+<section id="about">
+  <div class="container" >
+    <div class="row" style="margin-top: 100px; margin-bottom: 100px;">
+      <div class="col-md-5">
+          <div id="about-content-box-outer">
+            <div id="about-content-box-inner">
+              <div class="content-title title-color wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                <h3>Prediction & Accuracy</h3>
+              </div>
+              <div id="about-desc" class="wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+                                  <p>HealthCare.AI is a online portal where you can diagnosis multiple diseases. We are helping the doctors and the patients in the early detection of the diseases which are not easily detectable.
+                                  </p>
+                <p>
+                Our main aim is to resolve the problems arising due to medical errors and misdiagnosis, and helps the doctors in treating their patients more effctively.</p>
+                              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-7 text-center">
+        <h4>Prediction accuracy of Diabetic Retinopathy</h4>
+        <canvas id="doughnut-chart" width="800" height="450"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!--   footer   -->
+<footer>
+      <div id="contact">
+    <div class="content-title title-color wow animated fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
+      <h3>Contact Us</h3>
+    </div>
+    <div class="content-title-underline"></div>
+          <div class="container">
+              <div class="row">
+
+                  <div class="col-md-6">
+                      <div id="contact-left">
+
+                          <h3 style="font-size: 50px;padding: 50px 0;">HeathCare.Ai</h3>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div id="contact-right">
+                        <form>
+                          <div class="form-group">
+                  <input type="text" class="form-control" id="" placeholder="Name">
+              </div>
+                          <div class="form-group">
+                  <input type="email" class="form-control" id="" placeholder="name@example.com">
+               </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="" rows="3" placeholder="Message"></textarea>
+               </div>
+               <div class="text-center">
+                 <button type="button" class="btn btn-brand btn-css3">
+                  <i class="fa fa-paper-plane"></i><span>  Send Message</span>
+                 </button>
+              </div>
+                        </form>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+
+      </div>
+
+      <div id="footer-bottom">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12 hidden-sm hidden-xs">
+                      <div id="footer-menu">
+                          <ul>
+                              <li><a class="smooth-scroll" href="#home">Home</a>/</li>
+                              <li><a class="smooth-scroll" href="#feature">Features</a>/</li>
+                              <li><a class="smooth-scroll" href="#about">About</a>/</li>
+                              <!-- <li><a class="smooth-scroll" href="#team">Our Team</a>/</li> -->
+                              <li><a class="smooth-scroll" href="#team">Contact</a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+<script src="{% static 'DiseaseDetectionApp/js/wow/wow.min.js' %}"></script>
+<script src="{% static 'DiseaseDetectionApp/js/jquery/jquery.js' %}"></script>
+<script src="{% static 'DiseaseDetectionApp/js/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'DiseaseDetectionApp/js/counter/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'DiseaseDetectionApp/js/counter/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'DiseaseDetectionApp/js/slick/slick.min.js' %}"></script>
+<!-- owl carousel JS -->
+<script src="{% static 'DiseaseDetectionApp/js/owl-carousel/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiseaseDetectionApp/js/custom.js' %}"></script>
+<script type="text/javascript">
+  $(window).on('load',function(){
+      $('#popupModal').modal('show');
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+// Bar chart
+new Chart(document.getElementById("doughnut-chart"), {
+  type: 'doughnut',
+  data: {
+    labels: ["Diabetic Retinopathy"],
+    datasets: [
+      {
+        label: "Accuracy(%)",
+        backgroundColor: ["#3e95cd"],
+        data: [95]
+      }
+    ]
+  },
+
+});
+</script>
 
 
 {% endblock %}

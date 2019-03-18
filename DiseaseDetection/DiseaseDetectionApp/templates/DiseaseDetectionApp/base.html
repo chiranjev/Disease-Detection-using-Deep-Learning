@@ -38,6 +38,13 @@
     <!-- owl carousel JS -->
     <script type="text/javascript" src="{% static 'DiseaseDetectionApp/js/owl-carousel/owl.carousel.min.js' %}"></script>
 
+    <script type="text/javascript" src="{% static 'DiseaseDetectionApp/js/custom.js' %}"></script>
+    <script type="text/javascript" href="{% static 'DiseaseDetectionApp/js/wow/wow.min.js' %}"></script>
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            $('#popupModal').modal('show');
+        });
+    </script>
 
 
 
@@ -95,8 +102,13 @@
 
   							<!-- <li><a class="navbar-link" href="{% url 'logout' %}">Logout</a></li> -->
   							{% if user.is_authenticated %}
-                <li><a class="smooth-scroll" href="/">Hi {{ user.username }}</a></li>
-  							<li><a class="smooth-scroll" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="smooth-scroll" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/">Hi, {{ user.username }} &#x25BC; </a>
+                <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  <div class="dropdown-divider"></div>
+                </div>
+                </li>
+                <!-- <li><a class="smooth-scroll" href="{% url 'logout' %}">Logout</a></li> -->
   							{% else %}
   							<li><a class="smooth-scroll" href="{% url 'user_login' %}">Login</a></li>
   							<!-- <li><a class="navbar-link" href="{% url 'user_login' %}">Login</a></li> -->
@@ -118,6 +130,10 @@
 
 
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/chat_widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"fcf8e6f7dafd4564",bot_name:"HIA",welcome_msg:true,branding_key:"default"});</script>
+$(document).ready(function() {
+  $('//*[@id="engt-composer"]/p[1]/a').hide();
+});
 </html>
