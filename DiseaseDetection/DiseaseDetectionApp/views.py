@@ -4,14 +4,16 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
+from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
-
+import keras
 
 # from imutils import build_montages
 # from imutils import paths
@@ -19,15 +21,46 @@ import numpy as np
 import argparse
 import random
 import cv2
+import shutil
+import os
 from .utils import *
 
 
 
 model = load_model('media/models/malaria.model')
 model._make_predict_function()
+mod = load_model(settings.BASE_DIR+'\\media\\models\\dretinopathy.hd5')
+mod._make_predict_function()
 
 def index(request):
     return render(request, 'DiseaseDetectionApp/base.html',{})
+
+def drprediction(p):
+    mod.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    print('*************************************************1')
+    test_gen = ImageDataGenerator(rescale = 1./255)
+    import os
+    print('*************************************************2')
+    test_data = test_gen.flow_from_directory(settings.BASE_DIR+'\\DiseaseDetectionApp\\static\\DiseaseDetectionApp\\dretin',
+                                              target_size = (64, 64),
+                                              batch_size = 32,
+                                              class_mode = 'binary', shuffle=False)
+    filenames = test_data.filenames
+    nb_samples = len(filenames)
+    print('*************************************************3')
+    predict = mod.predict_generator(test_data,steps = nb_samples/32)
+    loss, acc = mod.evaluate_generator(test_data, steps=nb_samples/32, verbose=0)
+    y_pred = predict[0][0] > 0.4
+    print('*************************************************4')
+    print(y_pred)
+    percent_chance = round(predict[0][0]*100, 2)
+
+    if y_pred == True:
+        label = "Parasitized"
+    else: label = "Uninfected"
+
+    return label
+
 
 def prediction(p):
     orig = cv2.imread(p)
@@ -123,26 +156,63 @@ def retina(request):
             image_path = form.cleaned_data['retina_img']
             # print('kdslfjskldfjsdlkfjsdklfjsdflkj')
             # print(image_path)
-            label = prediction('media/images/'+str(image_path))
-            if(label=='Parasitized'):
-                label = "has diabeties"
-            else:
-                label = "does not have diabeties"
+            mydir = settings.BASE_DIR+'\\DiseaseDetectionApp\\static\\DiseaseDetectionApp\\dretin\\dataimages\\'
+            if len(os.listdir(mydir)) != 0:
+                filelist = [ f for f in os.listdir(mydir) if f.endswith(".jpeg") ]
+                for f in filelist:
+                    os.remove(os.path.join(mydir, f))
 
+            if ('media/images/'+str(image_path)):
+                src_dir = "media/images/"+str(image_path)
+                dst_dir = mydir
+                shutil.copy(src_dir, dst_dir)
+
+            label = drprediction('media/images/'+str(image_path))
+            if(label=='Parasitized'):
+                label = "diabetic"
+            else:
+                label = "not diabetic"
             malaria_obj = DiabeticRetinopathy.objects.filter().order_by('-pk')[0]
             malaria_obj.prediction = label
             if request.user.is_authenticated:
                 user_obj = User.objects.get(username=request.user.username)
                 malaria_obj.user = user_obj
             malaria_obj.save()
-
-
             return render(request, 'DiseaseDetectionApp/retina.html', {'image_path': image_path,'label':label})
 
             return redirect('/retina',{'image_path': image_path})
     else:
         form = DiabeticRetinopathyForm()
     return render(request, 'DiseaseDetectionApp/retina.html', {'form' : form})
+
+    # if request.method == 'POST':
+    #     form = DiabeticRetinopathyForm(request.POST, request.FILES)
+    #
+    #     if form.is_valid():
+    #         form.save()
+    #         image_path = form.cleaned_data['retina_img']
+    #         # print('kdslfjskldfjsdlkfjsdklfjsdflkj')
+    #         # print(image_path)
+    #         label = prediction('media/images/'+str(image_path))
+    #         if(label=='Parasitized'):
+    #             label = "has diabeties"
+    #         else:
+    #             label = "does not have diabeties"
+    #
+    #         malaria_obj = DiabeticRetinopathy.objects.filter().order_by('-pk')[0]
+    #         malaria_obj.prediction = label
+    #         if request.user.is_authenticated:
+    #             user_obj = User.objects.get(username=request.user.username)
+    #             malaria_obj.user = user_obj
+    #         malaria_obj.save()
+    #
+    #
+    #         return render(request, 'DiseaseDetectionApp/retina.html', {'image_path': image_path,'label':label})
+    #
+    #         return redirect('/retina',{'image_path': image_path})
+    # else:
+    #     form = DiabeticRetinopathyForm()
+    # return render(request, 'DiseaseDetectionApp/retina.html', {'form' : form})
 
 
 def index(request):
